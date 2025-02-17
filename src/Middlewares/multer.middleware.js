@@ -16,37 +16,37 @@ import fs from 'fs'
  */
 
 
-export const multerLocalMiddleware = (destinationPath = 'general', allwedExtintion = []) => {
-    try {
-        const destinationFolder = `Assets/${destinationPath}`
+// export const multerLocalMiddleware = (destinationPath = 'general', allwedExtintion = []) => {
+//     try {
+//         const destinationFolder = `Assets/${destinationPath}`
 
-        if (!fs.existsSync(destinationFolder))
-            fs.mkdirSync(destinationFolder, { recursive: true })
+//         if (!fs.existsSync(destinationFolder))
+//             fs.mkdirSync(destinationFolder, { recursive: true })
 
-        const storage = multer.diskStorage({
-            destination: (req, file, cb) => {
-                cb(null, destinationFolder)
-            },
-            filename: (req, file, cb) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-                cb(null, uniqueSuffix + '_' + file.originalname)
-            }
-        })
+//         const storage = multer.diskStorage({
+//             destination: (req, file, cb) => {
+//                 cb(null, destinationFolder)
+//             },
+//             filename: (req, file, cb) => {
+//                 const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//                 cb(null, uniqueSuffix + '_' + file.originalname)
+//             }
+//         })
 
-        const fileFilter = (req, file, cb) => {
-            if (allwedExtintion.includes(file.mimetype))
-                cb(null, true)
-            else {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-                cb(null, uniqueSuffix + '_' + file.originalname)
-            }
-        }
-        const upload = multer({ fileFilter, storage })
-        return upload
-    } catch (error) {
-        console.log("multer error :", error);
-    }
-}
+//         const fileFilter = (req, file, cb) => {
+//             if (allwedExtintion.includes(file.mimetype))
+//                 cb(null, true)
+//             else {
+//                 const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//                 cb(null, uniqueSuffix + '_' + file.originalname)
+//             }
+//         }
+//         const upload = multer({ fileFilter, storage })
+//         return upload
+//     } catch (error) {
+//         console.log("multer error :", error);
+//     }
+// }
 /**
  * Middleware for handling file uploads using Multer with customizable file storage.
  * @function multerHostMiddleware
