@@ -14,7 +14,6 @@ import fs from 'fs'
  * - Filters uploaded files based on allowed MIME types.
  * - Returns a configured Multer instance to handle file uploads.
  */
-
 /**
  * Middleware for handling file uploads using Multer with customizable file storage.
  * @function multerHostMiddleware

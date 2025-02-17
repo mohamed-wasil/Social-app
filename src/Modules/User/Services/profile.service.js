@@ -188,7 +188,7 @@ export const updateUserService = async (req, res) => {
 
     if (username) user.username = username
     if (email) {
-        if (user.email == email) return res.status(402).json({ message: "User already exist" })
+        if (user.email == email) return res.status(402).json({ message: "Email is Samiler" })
         user.email = email;
         user.isVerified = false;
 
