@@ -29,14 +29,13 @@ const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     limit: 100, // Limit each IP to 100 requests per windowMs
     message: 'Too many requests from this IP, please try again after 15 minutes',
-    legacyHeaders: false
 });
 
 const bootstrap = () => {
     const port = process.env.PORT || 3000
 
     const app = express();
-    app.use("/Assets", express.static('Assets'))
+    // app.use("/Assets", express.static('Assets'))
     app.use(limiter)
     app.use(helmet());
     app.use(express.json())
