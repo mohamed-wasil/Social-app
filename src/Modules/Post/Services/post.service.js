@@ -101,7 +101,7 @@ export const deletePostService = async (req, res) => {
     const post = await Post.findOneAndDelete({ _id: postId, ownerId });
     if (!post) return res.status(409).json({ message: "Post not found" });
 
-    res.status(201).json({ message: "Post deleted success", post })
+    res.status(201).json({ message: "Post deleted successfully" })
 }
 /**
  * Edit a post owned by the logged-in user
@@ -282,7 +282,7 @@ export const unHidePostsService = async (req, res) => {
         { userId, postId },
         { upsert: true, new: true } // if not exist create it
     );
-    res.status(201).json({ message: "Unhide post successfully", unHiddenPost })
+    res.status(201).json({ message: "Unhide post successfully" })
 }
 /**
  * Save a post for the logged-in user
@@ -304,6 +304,9 @@ export const unHidePostsService = async (req, res) => {
 export const savePostService = async (req, res) => {
     const { _id: userId } = req.loggedIn;
     const { postId } = req.params;
+
+    const post = await Post.findById(postId)
+    if (!post) return res.status(409).json({ message: "Not Post found" })
 
     const savePost = await SavedPosts.findOneAndUpdate({ postId, userId }, { postId, userId }, { upsert: true, new: true })
     res.status(201).json({ message: "post saved successfully" })
@@ -329,6 +332,9 @@ export const savePostService = async (req, res) => {
 export const unSavePostService = async (req, res) => {
     const { _id: userId } = req.loggedIn;
     const { postId } = req.params;
+
+    const post = await Post.findById(postId)
+    if (!post) return res.status(409).json({ message: "Not Post found" })
 
     const savePost = await SavedPosts.findOneAndDelete({ postId, userId }, { postId, userId }, { upsert: true, new: true })
     res.status(201).json({ message: "post unsaved successfully" })
