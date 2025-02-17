@@ -462,9 +462,9 @@ export const unBlockUserService = async (req, res) => {
     const userIsExist = await User.findOne({ email })
     if (!userIsExist) return res.status(201).json({ message: 'User not found' })
 
-    const deleteBlock = await BlockedUsers.findOneAndUpdate({ userId: _id, usersBlocked: { $in: userIsExist._id } },
+    const deleteBlock = await BlockedUsers.findOneAndUpdate({ userId: _id, usersBlocked: { $in: [userIsExist._id] } },
         {
-            $pull: { usersBlocked: userIsExist._id }
+            $pull: { usersBlocked: userIsExist?._id }
         }, { new: true }
     )
     return res.status(201).json({ message: 'Block deleted Successfully' })

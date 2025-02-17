@@ -8,7 +8,7 @@ const blockedUserSchema = new mongoose.Schema({
 
 
 blockedUserSchema.post("findOneAndUpdate", async function (doc) {    
-    if (!doc?.usersBlocked?.length ) await BlockedUsers.deleteOne({ _id: doc._id })
+    if (!doc?.usersBlocked?.length ) await BlockedUsers.deleteOne({ _id: doc?._id })
 })
 
 const BlockedUsers = mongoose.model.BlockedUsers || mongoose.model('BlockedUsers', blockedUserSchema)
