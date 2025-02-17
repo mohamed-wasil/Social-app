@@ -257,8 +257,10 @@ export const getUserService = async (req, res) => {
 export const getSpecificUserService = async (req, res) => {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).populate("Posts");
+    const user = await User.findById(userId).populate("Posts").select("-password");
     if (!user) return res.status(400).json({ message: "user not found!" })
+        user.phone =await Decryption( {cipher:user.phone})
+
 
     res.status(201).json({ message: "success", user })
 
