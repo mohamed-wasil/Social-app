@@ -14,6 +14,13 @@ export const addReactService = async (req, res, next) => {
 
     const newReactType = reactType.toLowerCase()
 
+    const reactExist = await React.findOne({ ownerId, reactOnId, onModel: capitalizedWord })
+    if (reactExist) {
+        reactExist.reactType = newReactType
+        await reactExist.save()
+        return res.status(201).json({ message: "React changed successfully" })
+    }
+
     const reactObject = {
         reactOnId,
         onModel: capitalizedWord,
@@ -48,7 +55,7 @@ export const deleteReactService = async (req, res, next) => {
         _id: reactId,
         ownerId
     })
-    if(!deletedReact) return res.status(400).json({ mesage: "React not found" })
+    if (!deletedReact) return res.status(400).json({ mesage: "React not found" })
 
-         res.status(201).json({ mesage: "React deleted successfully" })
+    res.status(201).json({ mesage: "React deleted successfully" })
 }

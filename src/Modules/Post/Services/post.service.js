@@ -334,7 +334,7 @@ export const unSavePostService = async (req, res) => {
     const { postId } = req.params;
 
     const post = await Post.findById(postId)
-    if (!post) return res.status(409).json({ message: "Not Post found" })
+    if (!post) return res.status(409).json({ message: "Invalid post ID" })
 
     const savePost = await SavedPosts.findOneAndDelete({ postId, userId }, { postId, userId }, { upsert: true, new: true })
     res.status(201).json({ message: "post unsaved successfully" })
