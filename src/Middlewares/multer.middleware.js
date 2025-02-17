@@ -15,6 +15,7 @@ import fs from 'fs'
  * - Returns a configured Multer instance to handle file uploads.
  */
 
+
 export const multerLocalMiddleware = (destinationPath = 'general', allwedExtintion = []) => {
     try {
         const destinationFolder = `Assets/${destinationPath}`
@@ -79,7 +80,7 @@ export const multerHostMiddleware = (allwedExtintion = []) => {
 
         return upload
     } catch (error) {
-        console.log("multer error :", error);
+        console.log("multer middleware error :", error);
     }
 }
 
