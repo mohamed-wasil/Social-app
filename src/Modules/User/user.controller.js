@@ -2,22 +2,22 @@ import { Router } from "express";
 import * as userServices from "./Services/profile.service.js"
 import * as chatServices from "./Services/chat.service.js"
 import { errorHandlerMiddleware } from "../../Middlewares/error-handler.middlewasre.js";
-import { multerHostMiddleware, multerLocalMiddleware } from "../../Middlewares/multer.middleware.js";
+import { multerHostMiddleware } from "../../Middlewares/multer.middleware.js";
 import { authenticationMiddleware } from "../../Middlewares/authentication.middleware.js";
 import { validationMiddleware } from "../../Middlewares/validation.middleware.js";
 import { getUserSchema, updateUserInfoSchema } from "../../Validators/user.schema.js";
 export const userController = Router()
 
-userController.patch('/upload-profile',
-    multerLocalMiddleware("user/profile").single('image'),
-    authenticationMiddleware(),
-    errorHandlerMiddleware(userServices.uploadPicService)
-)
-userController.patch('/upload-cover',
-    multerLocalMiddleware("user/profile").array('cover', 4),
-    authenticationMiddleware(),
-    errorHandlerMiddleware(userServices.uploadCoverPicsService)
-)
+// userController.patch('/upload-profile',
+//     multerLocalMiddleware("user/profile").single('image'),
+//     authenticationMiddleware(),
+//     errorHandlerMiddleware(userServices.uploadPicService)
+// )
+// userController.patch('/upload-cover',
+//     multerLocalMiddleware("user/profile").array('cover', 4),
+//     authenticationMiddleware(),
+//     errorHandlerMiddleware(userServices.uploadCoverPicsService)
+// )
 userController.patch('/uploud-cloud-profile',
     authenticationMiddleware(),
     multerHostMiddleware().single("profile"),
