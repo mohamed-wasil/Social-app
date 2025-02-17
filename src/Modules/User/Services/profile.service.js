@@ -405,7 +405,7 @@ export const listuserFriends = async (req, res) => {
                 select: "username"
             }
         ]).select("friends -_id")
-    res.status(201).json({ message: 'success', friends, user: { _id, username } })
+    res.status(201).json({ message: 'success', friends:friends.friends })
 }
 /**
  * @function blockUserService
