@@ -93,9 +93,12 @@ userSchema.pre("updateOne", async function () {
 
 userSchema.post('findOneAndDelete', async function (doc) {
 
-    await cloudinary().api.delete_resources_by_prefix(`${process.env.CLOUDINARY_FOLDER}/Users/${doc.mediaCloudFolder}/Covers`)
-    await cloudinary().api.delete_resources_by_prefix(`${process.env.CLOUDINARY_FOLDER}/Users/${doc.mediaCloudFolder}/Profile`)
-    await cloudinary().api.delete_folder(`${process.env.CLOUDINARY_FOLDER}/Users/${doc.mediaCloudFolder}`)
+    if(doc?.mediaCloudFolder){
+        await cloudinary().api.delete_resources_by_prefix(`${process.env.CLOUDINARY_FOLDER}/Users/${doc?.mediaCloudFolder}/Covers`)
+        await cloudinary().api.delete_resources_by_prefix(`${process.env.CLOUDINARY_FOLDER}/Users/${doc?.mediaCloudFolder}/Profile`)
+        await cloudinary().api.delete_folder(`${process.env.CLOUDINARY_FOLDER}/Users/${doc?.mediaCloudFolder}`)
+    }
+    
 })
 
 const User = mongoose.model.User || mongoose.model("User", userSchema)

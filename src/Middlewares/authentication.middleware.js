@@ -16,7 +16,7 @@ import BlackListTokens from "../DB/Models/black-list-tokens.model.js";
  * - Returns the user's data along with token details if validation is successful.
  */
 
-const validateUserToken = async (token) => {
+const validateUserToken = async (token, res) => {
     const decodedData = jwt.verify(token, process.env.JWT_SECRET_LOGIN)
 
     const isBlackListed = await BlackListTokens.findOne({ tokenId: decodedData.jti })
@@ -44,12 +44,12 @@ const validateUserToken = async (token) => {
  *   - Calls `next()` to proceed to the next middleware.
  *   - Handles errors, including token expiration or authentication failure.
  */
-export const authenticationMiddleware =  (socket =null) => {
+export const authenticationMiddleware = (socket = null) => {
     if (socket) return validateUserToken(socket)
     return async (req, res, next) => {
         try {
             const { token } = req.headers;
-            req.loggedIn = await validateUserToken(token)
+            req.loggedIn = await validateUserToken(token, res)
 
             next()
         } catch (error) {
