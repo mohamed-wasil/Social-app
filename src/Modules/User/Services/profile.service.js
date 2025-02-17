@@ -467,5 +467,5 @@ export const unBlockUserService = async (req, res) => {
             $pull: { usersBlocked: userIsExist._id }
         }, { new: true }
     )
-    return res.status(201).json({ message: 'Block deleted Successfully', deleteBlock })
+    return res.status(201).json({ message: 'Block deleted Successfully' })
 }
